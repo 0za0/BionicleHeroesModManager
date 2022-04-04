@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="BionicleHeroesModManager.UserControls.ModItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BionicleHeroesModManager.UserControls"
+             mc:Ignorable="d" Height="100" Width="350">
+    <StackPanel Orientation="Horizontal">
+        <Image x:Name="ModImage" Height="100" Width="100"/>
+        <Label x:Name="ModName"  FontSize="20" HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="200">
+            <Label.Content>
+                <AccessText TextWrapping="Wrap" Text="Example Mod Item"/>
+            </Label.Content>
+        </Label>
+       
+    </StackPanel>
+</UserControl>

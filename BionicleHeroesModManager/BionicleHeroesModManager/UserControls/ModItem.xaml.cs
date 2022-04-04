@@ -12,25 +12,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using BionicleHeroesModManager.Networking;
 
-namespace BionicleHeroesModManager
+namespace BionicleHeroesModManager.UserControls
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for ModItem.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ModItem : UserControl
     {
-        public MainWindow()
+        public ModItem()
         {
             InitializeComponent();
         }
 
-        private async void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            string data = await Scraper.CallUrl("https://www.moddb.com/games/bionicle-heroes/mods");
-            MessageBox.Show("Done");
-            Scraper.ParseHTML(data);
-        }
     }
 }
