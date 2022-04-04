@@ -1,2 +1,10 @@
 # BionicleHeroesModManager
- Bionicle Heroes Mod Manager
+ Sex 3 Official Github repo
+
+
+# Planned Features
+- Auto Fetch from ModDB
+- Keeping Track of Installs (If a mod is just some replacement files, then just replace those files and copy the original)
+- Detect and use DXWnd if user preferred 
+- MD5 Validation 
+
