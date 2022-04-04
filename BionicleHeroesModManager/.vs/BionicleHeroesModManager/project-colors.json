@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "c6bfb8d3-f495-4733-8425-4ce20bf36a96": {
+      "ProjectGuid": "c6bfb8d3-f495-4733-8425-4ce20bf36a96",
+      "DisplayName": "BionicleHeroesModManager",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
