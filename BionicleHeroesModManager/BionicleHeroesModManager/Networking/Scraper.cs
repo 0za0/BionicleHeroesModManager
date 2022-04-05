@@ -8,13 +8,25 @@ using System.Net.Http;
 using System.IO;
 using HtmlAgilityPack;
 using System.Windows;
-using System.Collections.Generic;
+using System.Text.RegularExpressions;
+
 namespace BionicleHeroesModManager.Networking
 {
-    record Mod(string ImageURL, string Title);
+    //Hurr Durr Object orientation 
+    public class Mod
+    {
+        public string ImageURL { get; set; }
+        public string BigImageURL { get; set; }
+        public string Title { get; set; }
+        public string URL { get; private set; }
+        public string Description { get; set; }
+        public Mod(string img, string name, string url) => (ImageURL, Title, URL) = (img, name, url);
+
+
+    }
     internal class Scraper
     {
-        public static object Messagebox { get; private set; }
+        public static List<Mod> Mods = new List<Mod>();
 
         public static async Task<string> CallUrl(string fullUrl)
         {
@@ -24,20 +36,42 @@ namespace BionicleHeroesModManager.Networking
             var response = client.GetStringAsync(fullUrl);
             return await response;
         }
-
-        public static void ParseHTML(string HTML)
+        //God have mercy
+        public static async Task<string> DownloadImages(Mod m)
+        {
+            HttpClient client = new HttpClient();
+            var resp = await client.GetAsync(m.ImageURL);
+            var path = Path.Join(Directory.GetCurrentDirectory(), $"/ImageCache/{Regex.Replace(m.Title, @"[^a-zA-Z]", String.Empty)}.jpg").Replace(@"\\", @"\");
+            if (!File.Exists(path))
+                await File.WriteAllBytesAsync(path, await resp.Content.ReadAsByteArrayAsync());
+            return Path.GetFullPath(path);
+        }
+        //Fuck me sideways
+        public static async Task<List<Mod>> ParseModPageHTML(string HTML)
         {
             var htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(HTML);
-            var AllModItems = htmlDoc.DocumentNode.SelectNodes("//*[@id=\"modsbrowse\"]/div[2]/div/div[2]").Descendants("a");
-
-
-            List<Mod> Mods = new List<Mod>();
-
-            foreach (var item in AllModItems.Skip(0).Where(x => x.InnerText != String.Empty))
+            var AllModItems = htmlDoc.DocumentNode.SelectNodes("//*[@id=\"modsbrowse\"]/div[2]/div/div[2]/div[*]/a").ToList();
+            foreach (var item in AllModItems)
             {
-                var x = item.Descendants("img");
-                MessageBox.Show(String.Join('\n', x.Select(y => y.Attributes["src"].Value.ToString())));
+                var modName = item.Attributes["title"].Value;
+                var href = item.Attributes["href"].Value;
+                var modImageLocation = item.FirstChild.Attributes["src"].Value;
+                Mod m = new Mod(modImageLocation, modName, href);
+                m.ImageURL = await DownloadImages(m);
+                Mods.Add(m);
+            }
+            return Mods;
+        }
+        public static void ParseDetailedModPage(string HTML, Mod c)
+        {
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(HTML);
+            var ModDesc = htmlDoc.DocumentNode.SelectNodes("/html/body/div[1]/div/div[3]/div[1]/div[2]/div/div").Descendants("p").ToList();
+            //var ModBigImg = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"articlesbrowse\"]/div[2]/div/div[2]/div[2]/").Descendants("img").ToList();
+            foreach (var item in ModDesc)
+            {
+                c.Description += ModDesc.First().InnerText;
             }
         }
 

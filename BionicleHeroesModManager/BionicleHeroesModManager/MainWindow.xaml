@@ -4,9 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BionicleHeroesModManager"
+        xmlns:controls="clr-namespace:BionicleHeroesModManager.UserControls"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
-    <Grid>
-
+    <Grid x:Name="MainGrid">
+        <StackPanel x:Name="MainStackPanel" Orientation="Vertical" Width="400" Margin="25,0,375,0">
+            <StackPanel.Resources>
+                
+                <Style TargetType="{x:Type controls:ModItem}">
+                    <Setter Property="Margin" Value="0,0,0,0"/>
+                    <Setter Property="Width" Value="350"/>
+                </Style>
+            </StackPanel.Resources>
+        </StackPanel>
     </Grid>
 </Window>

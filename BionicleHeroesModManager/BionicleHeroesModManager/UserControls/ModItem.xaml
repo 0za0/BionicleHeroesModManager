@@ -4,14 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BionicleHeroesModManager.UserControls"
-             mc:Ignorable="d" Height="100" Width="350">
-    <StackPanel Orientation="Horizontal">
-        <Image x:Name="ModImage" Height="100" Width="100"/>
-        <Label x:Name="ModName"  FontSize="20" HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="200">
+             mc:Ignorable="d" Height="100" Width="350"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <StackPanel Orientation="Horizontal" Width="350">
+        <Image Source="{Binding ModImg}" Height="100" Width="100"/>
+        <Label   FontSize="20" HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="200">
             <Label.Content>
-                <AccessText TextWrapping="Wrap" Text="Example Mod Item"/>
+                <AccessText TextWrapping="Wrap" Text="{Binding ModTitle}"/>
             </Label.Content>
         </Label>
-       
+
     </StackPanel>
 </UserControl>
