@@ -16,10 +16,10 @@ namespace BionicleHeroesModManager.Networking
     public class Mod
     {
         public string ImageURL { get; set; }
-        public string BigImageURL { get; set; }
+        public string BigImageURL { get; set; } = String.Empty;
         public string Title { get; set; }
         public string URL { get; private set; }
-        public string Description { get; set; }
+        public string Description { get; set; } = String.Empty;
         public Mod(string img, string name, string url) => (ImageURL, Title, URL) = (img, name, url);
 
 
@@ -37,14 +37,24 @@ namespace BionicleHeroesModManager.Networking
             return await response;
         }
         //God have mercy
-        public static async Task<string> DownloadImages(Mod m)
+        public static async Task DownloadImages(Mod m)
         {
             HttpClient client = new HttpClient();
-            var resp = await client.GetAsync(m.ImageURL);
+            var thumbnail = await client.GetAsync(m.ImageURL);
+            if (m.BigImageURL != String.Empty)
+            {
+                var bigImage = await client.GetAsync(m.BigImageURL);
+                var bigpath = Path.Join(Directory.GetCurrentDirectory(), $"/ImageCache/{Regex.Replace(m.Title, @"[^a-zA-Z]", String.Empty)}BIG.jpg").Replace(@"\\", @"\");
+                if (!File.Exists(bigpath))
+                    await File.WriteAllBytesAsync(bigpath, await bigImage.Content.ReadAsByteArrayAsync());
+                m.BigImageURL = Path.GetFullPath(bigpath);
+            }
+
+
             var path = Path.Join(Directory.GetCurrentDirectory(), $"/ImageCache/{Regex.Replace(m.Title, @"[^a-zA-Z]", String.Empty)}.jpg").Replace(@"\\", @"\");
             if (!File.Exists(path))
-                await File.WriteAllBytesAsync(path, await resp.Content.ReadAsByteArrayAsync());
-            return Path.GetFullPath(path);
+                await File.WriteAllBytesAsync(path, await thumbnail.Content.ReadAsByteArrayAsync());
+            m.ImageURL = Path.GetFullPath(path);
         }
         //Fuck me sideways
         public static async Task<List<Mod>> ParseModPageHTML(string HTML)
@@ -58,21 +68,29 @@ namespace BionicleHeroesModManager.Networking
                 var href = item.Attributes["href"].Value;
                 var modImageLocation = item.FirstChild.Attributes["src"].Value;
                 Mod m = new Mod(modImageLocation, modName, href);
-                m.ImageURL = await DownloadImages(m);
+                await DownloadImages(m);
                 Mods.Add(m);
             }
             return Mods;
         }
-        public static void ParseDetailedModPage(string HTML, Mod c)
+        public static async Task ParseDetailedModPageAsync(string HTML, Mod c)
         {
             var htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(HTML);
             var ModDesc = htmlDoc.DocumentNode.SelectNodes("/html/body/div[1]/div/div[3]/div[1]/div[2]/div/div").Descendants("p").ToList();
-            //var ModBigImg = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"articlesbrowse\"]/div[2]/div/div[2]/div[2]/").Descendants("img").ToList();
-            foreach (var item in ModDesc)
+            var ModBigImg = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"articlesbrowse\"]/div[2]/div/div[2]/div[2]/*").Descendants("img").First();
+            if (ModBigImg != null)
+                c.BigImageURL = ModBigImg.Attributes["src"].Value;
+            //await DownloadImages(c);
+            ////*[@id="articlesbrowse"]/div[2]/div/div[2]/div[2]/h2/a/img
+            ////*[@id="articlesbrowse"]/div[2]/div/div[2]/div[2]/p[2]/a/img
+            ////*[@id="articlesbrowse"]/div[2]/div/div[2]/div[2]/div[1]/p/a/img
+            if (c.Description == String.Empty)
             {
-                c.Description += ModDesc.First().InnerText;
+                foreach (var item in ModDesc)
+                    c.Description += ModDesc.First().InnerText;
             }
+
         }
 
     }

@@ -34,7 +34,7 @@ namespace BionicleHeroesModManager.View
             //https://www.moddb.com/games/bionicle-heroes/
             var response = await Scraper.CallUrl($"https://www.moddb.com{CurrentMod.URL}");
             //html/body/div[1]/div/div[3]/div[1]/div[2]/div/div/p
-            Scraper.ParseDetailedModPage(response, CurrentMod);
+            await Scraper.ParseDetailedModPageAsync(response, CurrentMod);
             DescriptionText.Text = CurrentMod.Description;
 
         }

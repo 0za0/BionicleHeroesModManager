@@ -50,6 +50,7 @@ namespace BionicleHeroesModManager
             var mo = sender as ModItem;
             ModDetails md = new ModDetails(mo.Mod);
             md.ShowDialog();
+            
         }
     }
 }
