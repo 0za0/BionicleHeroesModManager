@@ -2,7 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="200"
+             mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="200"
              x:Class="BionicleHeroesModManager.Views.ModView">
 
 	<DockPanel>
@@ -16,7 +16,7 @@
 			</Panel>
 		</Border>
 
-		<StackPanel Width="400" Margin="40 0 0 0"  VerticalAlignment="Center">
+		<StackPanel Width="600" Margin="40 0 0 0"  VerticalAlignment="Center">
 			<TextBlock FontSize="48">Mod Title</TextBlock>
 			<TextBlock TextWrapping="Wrap">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.  </TextBlock>
 		</StackPanel>
