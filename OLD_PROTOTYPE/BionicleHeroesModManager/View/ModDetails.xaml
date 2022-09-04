@@ -9,7 +9,7 @@
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
         <Button Content="Install" Margin="590,362,10,10"/>
-        <Image Source="http://www.ximagic.com/g_im_graytests/testGrid_h8w8.png" HorizontalAlignment="Left" Height="334" Margin="10,46,0,0" VerticalAlignment="Top" Width="321"/>
+        <Image x:Name="BigImage" Stretch="Fill" Source="{Binding BigModImg}" HorizontalAlignment="Left" Height="334" Margin="10,46,0,0" VerticalAlignment="Top" Width="367"/>
         <Label x:Name="ModLabel" Content="Test Mod Name" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Height="41" Width="297" FontSize="22"/>
         <TextBlock x:Name="DescriptionText" HorizontalAlignment="Left" Margin="390,46,0,0" TextWrapping="Wrap" Text="{Binding CurrentMod.Description}" VerticalAlignment="Top" Height="231" Width="400" RenderTransformOrigin="0.5,0.5" FontSize="15">
 
