@@ -1,0 +1,34 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="200"
+             x:Class="BionicleHeroesModManager.Views.ModView">
+
+	<DockPanel>
+		
+		<Border CornerRadius="10" ClipToBounds="True" DockPanel.Dock="Left">
+			<Panel Background="#549786">
+				<Image Width="200" Stretch="Uniform" Source="{Binding ModImage}" />
+				<Panel Height="200" IsVisible="{Binding ModImage, Converter={x:Static ObjectConverters.IsNull}}">
+					<PathIcon Height="75" Width="75" Data="{StaticResource games_regular}" />
+				</Panel>
+			</Panel>
+		</Border>
+
+		<StackPanel Width="400" Margin="40 0 0 0"  VerticalAlignment="Center">
+			<TextBlock FontSize="48">Mod Title</TextBlock>
+			<TextBlock TextWrapping="Wrap">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.  </TextBlock>
+		</StackPanel>
+		
+		<Button  Classes="Play" Margin="40 0 15 0"  VerticalAlignment="Center" Command="{Binding PlayMod}">
+			<PathIcon Data="{StaticResource play_regular}" />
+		</Button>
+		
+		<Button  VerticalAlignment="Center" Command="{Binding SetupMod}">
+			<PathIcon Data="{StaticResource settings_regular}" />
+		</Button>
+
+	
+	</DockPanel>
+</UserControl>

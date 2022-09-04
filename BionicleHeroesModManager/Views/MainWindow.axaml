@@ -3,15 +3,50 @@
         xmlns:vm="using:BionicleHeroesModManager.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		xmlns:local="using:BionicleHeroesModManager.Views"
+        mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="720"
         x:Class="BionicleHeroesModManager.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
-        Title="BionicleHeroesModManager">
+        Title="Canopus"
+		WindowStartupLocation="CenterScreen"
+		TransparencyLevelHint="AcrylicBlur"
+		Background="Transparent">
 
-    <Design.DataContext>
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
+	<Design.DataContext>
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+	<TabControl>
+		<!--Play Tab-->
+		<TabItem Header="Play" VerticalContentAlignment="Center">
+			<!--Mod ScrollViewer-->
+			<ScrollViewer>
+				<!--TODO: wrap this in its own control-->
+				<ItemsControl Margin="0 40 0 0" Items="{Binding Mods}">
+					<ItemsControl.ItemsPanel>
+						<ItemsPanelTemplate>
+							<StackPanel Orientation="Vertical" />
+						</ItemsPanelTemplate>
+					</ItemsControl.ItemsPanel>
 
+					<ItemsControl.ItemTemplate>
+						<DataTemplate>
+							<local:ModView Margin="60 0 0 20" />
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</ScrollViewer>
+		</TabItem>
+
+		<!--Download Tab-->
+		<TabItem Header="Download" VerticalContentAlignment="Center">
+		</TabItem>
+
+		<!--Settings Tab-->
+		<TabItem Header="Settings" VerticalContentAlignment="Center">
+			
+		</TabItem>
+
+
+	</TabControl>
 </Window>
