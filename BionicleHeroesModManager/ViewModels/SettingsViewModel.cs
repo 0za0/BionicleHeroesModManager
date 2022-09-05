@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BionicleHeroesModManager.ViewModels
 {
-    internal class SettingsViewModel : ViewModelBase
+    public class SettingsViewModel : ViewModelBase
     {
     }
 }

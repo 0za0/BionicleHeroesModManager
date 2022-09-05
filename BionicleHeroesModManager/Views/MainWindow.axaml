@@ -16,24 +16,25 @@
 		<vm:MainWindowViewModel/>
 	</Design.DataContext>
 
-	<TabControl>
-		
-		<!--Play Tab-->
-		<TabItem Header="Play" VerticalContentAlignment="Center">
-			<!--Mod ScrollViewer-->
-			<local:ModPlayView/>
-		</TabItem>
-		
-		<!--Download Tab-->
-		<TabItem Header="Download" VerticalContentAlignment="Center">
-			<local:ModDownloadView/>
-		</TabItem>
+	<Panel>
+		<TabControl Items="{Binding Tabs}">
+			<TabControl.ItemTemplate>
+				<DataTemplate>
+					<TextBlock
+						Text="{Binding Header}">
+					</TextBlock>
+				</DataTemplate>
+			</TabControl.ItemTemplate>
+			<TabControl.ContentTemplate>
+				<DataTemplate>
+					<ContentControl Content="{Binding Content}"></ContentControl>
+				</DataTemplate>
+			</TabControl.ContentTemplate>
+		</TabControl>
 
-		<!--Settings Tab-->
-		<TabItem Header="Settings" VerticalContentAlignment="Center">
-			<local:SettingsView/>
-		</TabItem>
-
-
-	</TabControl>
+		<StackPanel  VerticalAlignment="Bottom" HorizontalAlignment="Left" Orientation="Horizontal">
+			<ProgressBar Margin="10 0 15 0" IsIndeterminate="True"  Width="150"  IsVisible="{Binding IsBusy}" />
+			<TextBlock> Verifying Files</TextBlock>
+		</StackPanel>
+	</Panel>
 </Window>

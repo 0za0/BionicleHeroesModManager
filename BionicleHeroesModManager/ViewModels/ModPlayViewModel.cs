@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace BionicleHeroesModManager.ViewModels
 {
-    public class ModDownloadViewModel : ViewModelBase
+    internal class ModPlayViewModel : ViewModelBase
     {
-        public string SearchText { get; private set; }
     }
 }
