@@ -33,7 +33,7 @@
 		</TabControl>
 
 		<StackPanel  VerticalAlignment="Bottom" HorizontalAlignment="Left" Orientation="Horizontal">
-			<ProgressBar Margin="10 0 15 0" IsIndeterminate="True"  Width="150"  IsVisible="{Binding IsBusy}" />
+			<ProgressBar  Margin="10 0 15 0" IsIndeterminate="True"  Width="150"  IsVisible="{Binding IsBusy}" />
 			<TextBlock> Verifying Files</TextBlock>
 		</StackPanel>
 	</Panel>

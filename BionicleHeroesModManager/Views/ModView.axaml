@@ -17,18 +17,21 @@
 		</Border>
 
 		<StackPanel Width="600" Margin="40 0 0 0"  VerticalAlignment="Center">
-			<TextBlock FontSize="48">Mod Title</TextBlock>
-			<TextBlock TextWrapping="Wrap">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.  </TextBlock>
+			<TextBlock FontSize="48" Text="{Binding Mod.ModTitle}" >Mod Title</TextBlock>
+			<TextBlock Text="{Binding Mod.ModDescription}" TextWrapping="Wrap">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.  </TextBlock>
 		</StackPanel>
 		
-		<Button  Classes="Play" Margin="40 0 15 0"  VerticalAlignment="Center" Command="{Binding PlayMod}">
+		<Button  IsVisible="{Binding IsDownloaded}" Classes="Play" Margin="40 0 15 0"  VerticalAlignment="Center" Command="{Binding PlayMod}">
 			<PathIcon Data="{StaticResource play_regular}" />
 		</Button>
 		
-		<Button  VerticalAlignment="Center" Command="{Binding SetupMod}">
+		<Button  IsVisible="{Binding IsDownloaded}" VerticalAlignment="Center" Command="{Binding SetupMod}">
 			<PathIcon Data="{StaticResource settings_regular}" />
 		</Button>
 
+		<Button  Margin="40 0 15 0" IsVisible="{Binding !IsDownloaded}" VerticalAlignment="Center" Command="{Binding SetupMod}">
+			<PathIcon Data="{StaticResource arrow_download_regular}" />
+		</Button>
 	
 	</DockPanel>
 </UserControl>

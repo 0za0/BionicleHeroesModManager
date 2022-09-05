@@ -26,14 +26,16 @@ namespace BionicleHeroesModManager.ViewModels
         public ModPlayViewModel()
         {
             DownloadHeroes = ReactiveCommand.Create(() => { Debug.WriteLine("Cmon Man"); });
-             this.WhenAnyValue(x => x.Mods.Count).Subscribe(x => CollectionEmpty = x == 0);
-          
-            //Mods.Add(new());
-            //Mods.Add(new());
-            //Mods.Add(new());
-            //Mods.Add(new());
-            //Mods.Add(new());
-        
+            this.WhenAnyValue(x => x.Mods.Count).Subscribe(x => CollectionEmpty = x == 0);
+
+            //Mods.Add(new(new()));
+            //Mods.Add(new ModViewModel(new()) { IsDownloaded = true });
+            //Mods.Add(new ModViewModel(new()) { IsDownloaded = true });
+            //Mods.Add(new ModViewModel(new()) { IsDownloaded = true });
+            //Mods.Add(new ModViewModel(new()) { IsDownloaded = true });
+            //Mods.Add(new ModViewModel(new()) { IsDownloaded = true });
+           
+
         }
     }
 }
