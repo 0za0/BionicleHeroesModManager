@@ -29,7 +29,7 @@ namespace BionicleHeroesModManager.ViewModels
             set => this.RaiseAndSetIfChanged(ref _searchText, value);
         }
         private CancellationTokenSource? _cancellationTokenSource;
-        public ModDownloadViewModel()
+        public ModDownloadViewModel(MainWindowViewModel mw)
         {
             InitModsList();
 
@@ -37,7 +37,10 @@ namespace BionicleHeroesModManager.ViewModels
                 .Throttle(TimeSpan.FromMilliseconds(400))
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(DoSearch!);
+
+
         }
+        //TODO: Change this to be proper
         private async void DoSearch(string s)
         {
             _cancellationTokenSource?.Cancel();
@@ -66,6 +69,8 @@ namespace BionicleHeroesModManager.ViewModels
                 SearchResults.AddRange(AllMods);
             }
         }
+        
+        //TODO: Change this to be proper!
         public async void InitModsList()
         {
             _cancellationTokenSource?.Cancel();

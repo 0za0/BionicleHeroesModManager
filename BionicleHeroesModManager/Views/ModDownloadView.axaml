@@ -6,9 +6,6 @@
 			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="BionicleHeroesModManager.Views.ModDownloadView">
 
-	<Design.DataContext>
-		<vm:ModDownloadViewModel/>
-	</Design.DataContext>
 	
 	<DockPanel>
 		<StackPanel DockPanel.Dock="Top">

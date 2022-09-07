@@ -1,11 +1,10 @@
-﻿using Microsoft.VisualBasic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -21,6 +20,7 @@ namespace BionicleHeroesModManager.Models
             ModDescription = modDescription;
             ImageURL = imageURL;
             DownloadURL = downloadURL;
+            ModPath = $"./Mods/{ModTitle}";
         }
 
         public string ModTitle { get; set; }
@@ -28,15 +28,19 @@ namespace BionicleHeroesModManager.Models
         public string ImageURL { get; set; }
         public string DownloadURL { get; set; }
         public bool IsDownloaded { get; set; }
+        public string ModPath { get; private set; }
+        private string CachePath => $"./Cache/{ModTitle}";
 
-        private string ImageCachePath => $"./Cache/{ModTitle}";
-        private string ModPath => $"./Mods/{ModTitle}";
 
+        public Stream SaveModImageBitmapStream()
+        {
+            return File.OpenWrite(CachePath + ".bmp");
+        }
         public async Task<Stream> LoadModImageAsync()
         {
-            if (File.Exists(ImageCachePath + ".bmp"))
+            if (File.Exists(CachePath + ".bmp"))
             {
-                return File.OpenRead(ImageCachePath + ".bmp");
+                return File.OpenRead(CachePath + ".bmp");
             }
             else
             {
@@ -52,7 +56,7 @@ namespace BionicleHeroesModManager.Models
                 Directory.CreateDirectory("./Cache");
             }
 
-            using (var fs = File.OpenWrite(ImageCachePath))
+            using (var fs = File.OpenWrite(CachePath))
             {
                 await SaveToStreamAsync(this, fs);
             }
@@ -67,7 +71,7 @@ namespace BionicleHeroesModManager.Models
         {
             return (await JsonSerializer.DeserializeAsync<Mod>(stream).ConfigureAwait(false))!;
         }
-        
+
         public static async Task<IEnumerable<Mod>> LoadCachedAsync()
         {
             if (!Directory.Exists("./Cache"))
@@ -97,8 +101,26 @@ namespace BionicleHeroesModManager.Models
         public static async Task<IEnumerable<Mod>> SearchAsync(string searchTerm)
         {
             var m = await s_httpClient.GetFromJsonAsync<List<Mod>>("http://localhost:5000/mod.json");
-            return m.Where(x=>x.ModTitle.Any(c=>searchTerm.Contains(c)));
+            return m.Where(x => x.ModTitle.Any(c => searchTerm.Contains(c)));
 
+        }
+
+        public static WebClient DownloadMod(Mod mod)
+        {
+            WebClient webClient = new WebClient();
+            webClient.DownloadFileAsync(new Uri(mod.DownloadURL), mod.ModPath);
+            return webClient;
+        }
+        //TODO: Change to HTTPClient
+        public static WebClient DownloadBaseGame()
+        {
+            WebClient webClient = new WebClient();
+            if (!Directory.Exists("./Mods/BH_Modders"))
+            {
+                Directory.CreateDirectory("./Mods/BH_Modders");
+            }
+            webClient.DownloadFileAsync(new Uri("http://localhost:5000/mods/base/Modders.zip"), "./Mods/BH_Modders/Modders.zip");
+            return webClient;
         }
 
     }

@@ -10,7 +10,7 @@
 		<StackPanel VerticalAlignment="Center" IsVisible="{Binding CollectionEmpty}" >
 			<TextBlock Margin="0 0 0 20" 
 					   Text="Its lonely in here. Download Bionicle Heroes Modders Edition to get Started!" HorizontalAlignment="Center" VerticalAlignment="Center" ></TextBlock>
-			<Button  HorizontalAlignment="Center" Classes="Play" Command="{Binding DownloadHeroes}">Download</Button>
+			<Button  HorizontalAlignment="Center" Classes="Play" Command="{Binding DownloadBaseGame}">Download</Button>
 		</StackPanel>
 		
 		<!-- When Mods Are Installed --> 

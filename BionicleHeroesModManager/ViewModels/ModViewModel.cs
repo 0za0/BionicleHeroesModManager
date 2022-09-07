@@ -41,11 +41,27 @@ namespace BionicleHeroesModManager.ViewModels
                 ModImage = await Task.Run(() => Bitmap.DecodeToWidth(imageStream, 400));
             }
         }
+        public async Task SaveToDiskAsync()
+        {
+            await _mod.SaveAsync();
 
+            if (ModImage != null)
+            {
+                var bitmap = ModImage;
+
+                await Task.Run(() =>
+                {
+                    using (var fs = _mod.SaveModImageBitmapStream())
+                    {
+                        bitmap.Save(fs);
+                    }
+                });
+            }
+        }
         public ICommand SetupMod { get; }
         public ICommand PlayMod { get; }
         public ICommand DownloadMod { get; }
-        public bool IsDownloaded { get;  set; }
+        
 
     }
 }
