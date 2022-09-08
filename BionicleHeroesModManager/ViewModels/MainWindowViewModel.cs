@@ -45,8 +45,13 @@ namespace BionicleHeroesModManager.ViewModels
             get => _progressBarPercentage;
             set => this.RaiseAndSetIfChanged(ref _progressBarPercentage, value);
         }
-       
 
+        private bool _isIndeterminate;
+        public bool IsIndeterminate
+        {
+            get => _isWorking;
+            set => this.RaiseAndSetIfChanged(ref _isIndeterminate, value);
+        }
 
         public ObservableCollection<ModTabItem> Tabs { get; } = new();
 

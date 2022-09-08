@@ -64,6 +64,17 @@ namespace BionicleHeroesModManager.ViewModels
             await vm.LoadImage();
             await vm.SaveToDiskAsync();
             Mods.Add(vm);
+
+            MainWindowViewModel.IsWorking = true;
+            MainWindowViewModel.IsIndeterminate = true;
+            MainWindowViewModel.CurrentBgTask = "Unzipping Files...";
+
+
+            Task t = Mod.SetupAndBaseGame();
+            await t.ContinueWith((e) => {
+                MainWindowViewModel.CurrentBgTask = "Verifying Files...";
+                Mod.VerifyGameFile("./Mods/BH_Modders", "./Mods/BH_Modders/verification");
+            });
         }
 
         private void X_DownloadProgressChanged(object sender, System.Net.DownloadProgressChangedEventArgs e) =>

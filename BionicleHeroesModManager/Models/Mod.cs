@@ -7,6 +7,9 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.IO.Compression;
+using Avalonia.Markup.Xaml.Templates;
+
 
 namespace BionicleHeroesModManager.Models
 {
@@ -105,13 +108,15 @@ namespace BionicleHeroesModManager.Models
 
         }
 
+        // TODO: Change to HTTPClient
         public static WebClient DownloadMod(Mod mod)
         {
             WebClient webClient = new WebClient();
             webClient.DownloadFileAsync(new Uri(mod.DownloadURL), mod.ModPath);
             return webClient;
         }
-        //TODO: Change to HTTPClient
+        
+        // TODO: Change to HTTPClient
         public static WebClient DownloadBaseGame()
         {
             WebClient webClient = new WebClient();
@@ -121,6 +126,15 @@ namespace BionicleHeroesModManager.Models
             }
             webClient.DownloadFileAsync(new Uri("http://localhost:5000/mods/base/Modders.zip"), "./Mods/BH_Modders/Modders.zip");
             return webClient;
+        }
+
+        public static Task SetupAndBaseGame()
+        {
+            return Task.Run(() => ZipFile.ExtractToDirectory("./Mods/BH_Modders/Modders.zip", "./Mods/BH_Modders"));
+        }
+
+        public static async void VerifyGameFile(string gamePath, string verificationFilePath)
+        {
         }
 
     }

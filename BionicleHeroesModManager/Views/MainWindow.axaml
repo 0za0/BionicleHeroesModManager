@@ -33,7 +33,7 @@
 		</TabControl>
 
 		<StackPanel IsVisible="{Binding IsWorking}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Orientation="Horizontal">
-			<ProgressBar  Margin="10 0 15 0" Value="{Binding ProgressBarPercentage}"  Width="150"  IsVisible="{Binding IsBusy}" />
+			<ProgressBar  IsIndeterminate="{Binding IsIndeterminate}" Margin="10 0 15 0" Value="{Binding ProgressBarPercentage}"  Width="150"  IsVisible="{Binding IsBusy}" />
 			<TextBlock Text="{Binding CurrentBgTask}"> Verifying Files</TextBlock>
 		</StackPanel>
 	</Panel>
